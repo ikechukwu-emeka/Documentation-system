@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ALL STUDENTS</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      outline: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: gray;
+    }
+    .container {
+      margin: 0;
+      width: 100%;
+    }
+    .header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: maroon;
+      color: whitesmoke;
+      padding: 3rem 8rem;
+    }
+    .main-header {
+      font-size: 2rem;
+    }
+    .navbar {
+      width: 100%;
+      height: 3.6rem;
+      background: black;
+    }
+    .links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .links a {
+      display: flex;
+      padding: 1rem 4rem;
+      text-decoration: none;
+      color: white;
+      font-size: 1.3rem;
+      transition: 1.5s;
+    }
+    .links a:hover {
+      color: orange;
+    }
+
+    .table {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem 4rem;
+      color: maroon;
+    }
+    a {
+      padding: 10px;
+      text-decoration: none;
+      color: black;
+      font-size: 1rem;
+      transition: 0.5s;
+    }
+    input[type="submit"] {
+      width: 80%;
+      background-color: maroon;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+  </style>
+
+  <body>
+    <div class="header">
+      <header class="main-header">ALL STUDENTS IN THE SCHOOL</header>
+    </div>
+    <div class="navbar">
+      <nav class="links">
+        <a href="{% url 'new_student' %}"> ADD NEW STUDENT</a>
+        <a href="{% url 'welcome' %}" align="center"> HOMEPAGE</a>
+      </nav>
+    </div>
+    <div class="table">
+      <table align="center">
+        <tr bgcolor="grey">
+          <th>SN</th>
+          <th>First_Name</th>
+          <th>Last_Name</th>
+          <th>Reg_No</th>
+          <th>Action</th>
+        </tr>
+
+        {% for student in student %}
+        <tr bgcolor="white">
+          <td>{{ forloop.counter }}</td>
+          <td>{{ student.first_name }}</td>
+          <td>{{ student.last_name }}</td>
+          <td>{{ student.regno }}</td>
+          <td>
+            <a
+              href="{% url 'delete_student' student.id %}"
+              onclick="return confirm('Confirm record before deleting')"
+              >DELETE</a
+            >
+            -
+            <a href="{% url 'update_student' student.id %}">UPDATE</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    {% if messages %} {% for message in messages %}
+    <h4>{{ message }}</h4>
+    {% endfor %} {% endif %}
+  </body>
+</html>
